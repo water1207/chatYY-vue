@@ -19,8 +19,8 @@
               {{ item.content  }}
             </div>
             <div class="info-time">
-              <!-- <img :src="getImgUrl(getUserImg(item.u_id))" alt="" /> -->
-              <span>{{ getUserName(item.u_id) }}</span>
+              <img :src="getImgUrl(item.head_img)" alt="" />
+              <span>{{ item.name }}</span>
               <span>{{ item.time }}</span>
             </div>
           </div>
@@ -52,17 +52,13 @@ import { animation } from "@/util/util";
 import { getUserInfo, getGroupMessage } from "@/api/getData";
 
 import HeadPortrait from "@/components/HeadPortrait";
-import Emoji from "@/components/Emoji";
-import FileCard from "@/components/FileCard.vue";
 
 import SockJS from  'sockjs-client';
 import Stomp from 'stompjs';
 
 export default {
   components: {
-    HeadPortrait,
-    Emoji,
-    FileCard,
+    HeadPortrait
   },
   props: {
     groupInfo: Object,
@@ -96,20 +92,6 @@ export default {
     this.connect(parseInt(this.groupInfo.g_id));
   },
   methods: {
-    // getInfo() 根据用户id获取用户更详细信息如用户名、头像等
-    getUserName(uId) {
-      return "Steven"
-      // getUserInfo(uId).then(res => {
-      //   console.log("resssss",res.name);
-      //   return res.name;
-      // });
-    },
-    getUserImg(uId) {
-      getUserInfo(uId).then(res => {
-        console.log("resssss",res);
-        return res.head_img;
-      });
-    },
     getImgUrl(src) {
             return require('@/assets/img/' + src);
         },
@@ -165,7 +147,7 @@ export default {
         console.log("chatMsg", chatMsg);
         this.sendMessage(chatMsg);
         // 将刚聊天过的联系人上移置顶  LC
-        this.$emit('personCardSort', this.groupInfo.g_id)
+        this.$emit('groupCardSort', this.groupInfo.g_id)
         this.inputMsg = "";
       } else {
         this.$message({

@@ -75,7 +75,7 @@ export default {
       this.pcCurrent = friend.u_id;
     },
     personCardSort(id) {
-      console.log("hhh", this.friendList[0].u_id)
+      console.log("已刷新聊天序列: 当前置顶u_id", id);
       if (id !== this.friendList[0].u_id) {
         console.log(id);
         let nowPersonInfo;

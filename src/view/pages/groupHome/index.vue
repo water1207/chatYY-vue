@@ -26,7 +26,7 @@
       <div v-if="showChatWindow">
         <ChatWindow
           :groupInfo="selectedGroup"
-          @personCardSort="personCardSort"
+          @groupCardSort="groupCardSort"
         ></ChatWindow>
       </div>
       <div class="showIcon" v-else>
@@ -50,11 +50,10 @@ export default {
   },
   data() {
     return {
-      // 当前选中的好友id
-      pcCurrent: "",
-      groupList: [],
-      showChatWindow: false,
-      selectedGroup: {},
+      pcCurrent: "",         // 当前选中的频道g_id
+      groupList: [],         // 频道列表
+      showChatWindow: false, // 是否加载聊天消息
+      selectedGroup: {},     // 选中的频道Object
       uId: 0,
     };
   },
@@ -72,22 +71,21 @@ export default {
       this.selectedGroup = group;
       console.log("当前选中的频道", this.selectedGroup);
       console.log("当前选中的频道id",this.selectedGroup.g_id);
-      this.friendInfo = group;
       this.pcCurrent = group.g_id;
     },
-    personCardSort(id) {
-      console.log("hhh", this.friendList[0].u_id)
-      if (id !== this.friendList[0].u_id) {
-        console.log(id);
-        let nowPersonInfo;
-        for (let i = 0; i < this.friendList.length; i++) {
-          if (this.friendList[i].u_id == id) {
-            nowPersonInfo = this.friendList[i];
-            this.friendList.splice(i, 1);
+    groupCardSort(gId) {
+      console.log("已刷新频道聊天序列: 当前置顶g_id", id);
+      if (gId !== this.groupList[0].g_id) {
+        console.log(gId);
+        let nowGroupInfo;
+        for (let i = 0; i < this.groupList.length; i++) {
+          if (this.groupList[i].g_id == gId) {
+            nowGroupInfo = this.groupList[i];
+            this.groupList.splice(i, 1);
             break;
           }
         }
-        this.friendList.unshift(nowPersonInfo);
+        this.groupList.unshift(nowGroupInfo);
       }
     },
   },

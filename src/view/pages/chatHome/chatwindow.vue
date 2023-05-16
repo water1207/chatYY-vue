@@ -52,17 +52,13 @@ import { animation } from "@/util/util";
 import { getUserInfo, loadPersonalMessage } from "@/api/getData";
 
 import HeadPortrait from "@/components/HeadPortrait";
-import Emoji from "@/components/Emoji";
-import FileCard from "@/components/FileCard.vue";
 
 import SockJS from  'sockjs-client';
 import Stomp from 'stompjs';
 
 export default {
   components: {
-    HeadPortrait,
-    Emoji,
-    FileCard,
+    HeadPortrait
   },
   props: {
     friendInfo: Object,
@@ -97,6 +93,7 @@ export default {
     this.connect(this.uId);
   },
   methods: {
+    // 拼接头像
     getImgUrl(src) {
             return require('@/assets/img/' + src);
         },
@@ -114,7 +111,6 @@ export default {
                 if(data.from == that.friendInfo.u_id){
                   that.messageList.push(data);
                 }
-                console.log("messageList", that.messageList);
             });
         })
     },
@@ -134,6 +130,7 @@ export default {
         animation(scrollDom, scrollDom.scrollHeight - scrollDom.offsetHeight);
       });
     },
+    //调用stomp推送消息
     sendMessage(msg){
       this.stompClient.send("/app/chat/personal", {}, JSON.stringify({
           from: msg.from,
@@ -151,11 +148,9 @@ export default {
           to: parseInt(this.friendInfo.u_id),
           content: this.inputMsg,
         };
-
-        // this.sendMsg(chatMsg);
+        // 调用stomp推送消息
         this.sendMessage(chatMsg);
         // 将刚聊天过的联系人上移置顶
-        console.log("niuniuniu", this.friendInfo.u_id);
         this.$emit('personCardSort', this.friendInfo.u_id)
         this.inputMsg = "";
       } else {

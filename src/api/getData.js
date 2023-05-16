@@ -8,7 +8,7 @@ export const fetchMyFriends = (uId) => {
       method: 'get',
       baseURL: `${baseUrl}/fetchMyFriends`,
       params: {
-        u_id : uId
+        u_id : parseInt(uId)
       }
     }).then(res => res.data)
   }
@@ -19,7 +19,7 @@ export const fetchMyGroups = (uId) => {
     method: 'get',
     baseURL: `${baseUrl}/fetchMyGroups`,
     params: {
-      u_id : uId
+      u_id : parseInt(uId)
     }
   }).then(res => res.data)
 }
@@ -30,8 +30,8 @@ export const loadPersonalMessage = (_from, _to) => {
     method: 'get',
     baseURL: `${baseUrl}/getHistoryMessage`,
     params: {
-      from : _from,
-      to: _to
+      from : parseInt(_from),
+      to: parseInt(_to)
     }
   }).then(res => res.data)
 }
@@ -40,7 +40,7 @@ export const loadPersonalMessage = (_from, _to) => {
 export const getGroupMessage = gId => {
   return axios({
     method: 'get',
-    baseURL: `${baseUrl}/getHistoryGroupMessage`,
+    baseURL: `${baseUrl}/getHistoryGroupMessage2`,
     params: {
       g_id: parseInt(gId)
     }
